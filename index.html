@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Our Love Story ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Pages */
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: 0.8s ease-in-out;
+}
+
+.active {
+    transform: translateX(0);
+}
+
+video {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
+/* Romantic background */
+.romantic {
+    background: linear-gradient(to bottom, #ffe6f0, #ffccdd);
+}
+
+/* Images */
+img {
+    width: 80%;
+    max-width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 0 25px pink;
+}
+
+/* Text */
+h1 {
+    color: #ff3399;
+    text-shadow: 0 0 10px white;
+}
+
+/* Buttons */
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    background-color: #ff3399;
+    color: white;
+    cursor: pointer;
+}
+
+/* No button moving */
+#noBtn {
+    position: relative;
+}
+
+/* Floating Hearts */
+.heart {
+    position: absolute;
+    color: pink;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+    <source src="love.mp3" type="audio/mp3">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1" style="background:black;color:white;">
+    <h1>Tap To Start ❤️</h1>
+    <button onclick="startExperience()">Start</button>
+</div>
+
+<!-- PAGE 2 - INTRO -->
+<div class="page" id="page2">
+    <video id="introVideo" playsinline>
+        <source src="intro.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page romantic" id="page3">
+    <h1>Our Beautiful Moment 💕</h1>
+    <img src="image1.jpg">
+    <button onclick="nextPage(4)">Next</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page romantic" id="page4">
+    <h1>Another Memory ❤️</h1>
+    <img src="image2.jpg">
+    <button onclick="nextPage(5)">Next</button>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page romantic" id="page5">
+    <h1>More Memories Together 💖</h1>
+    <img src="image3.jpg">
+    <button onclick="nextPage(6)">Next</button>
+</div>
+
+<!-- PAGE 6 -->
+<div class="page romantic" id="page6">
+    <h1>One More Special Moment 💗</h1>
+    <img src="image4.jpg">
+    <button onclick="nextPage(7)">Next</button>
+</div>
+
+<!-- PAGE 7 - EXTRO -->
+<div class="page" id="page7">
+    <video id="extroVideo" playsinline>
+        <source src="extro.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- PAGE 8 - FINAL PROPOSAL -->
+<div class="page romantic" id="page8">
+    <h1>Will You Be Valentine? 💍❤️</h1>
+    <button onclick="sayYes()">Yes 💖</button>
+    <button id="noBtn">No 🙈</button>
+    <h2 id="result" style="color:#ff0066;"></h2>
+</div>
+
+<script>
+let currentPage = 1;
+let music = document.getElementById("bgMusic");
+let introVideo = document.getElementById("introVideo");
+let extroVideo = document.getElementById("extroVideo");
+
+function startExperience() {
+    music.play();
+    nextPage(2);
+    introVideo.play();
+}
+
+introVideo.onended = function() {
+    nextPage(3);
+};
+
+extroVideo.onended = function() {
+    nextPage(8);
+};
+
+function nextPage(pageNumber) {
+    document.getElementById("page" + currentPage).classList.remove("active");
+    document.getElementById("page" + pageNumber).classList.add("active");
+    currentPage = pageNumber;
+}
+
+/* Yes Button */
+function sayYes() {
+    document.getElementById("result").innerHTML = "Yayyyyy! 💖 I Love You Forever 😍💍";
+}
+
+/* No Button Escape */
+let noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseover", function() {
+    noBtn.style.left = Math.random() * 200 - 100 + "px";
+    noBtn.style.top = Math.random() * 100 - 50 + "px";
+});
+
+/* Floating Hearts */
+setInterval(function() {
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}, 500);
+</script>
+
+</body>
+</html>
